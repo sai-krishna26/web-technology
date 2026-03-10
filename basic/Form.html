@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+<body>
+    <form>
+        <h1>Registration Form</h1>
+        <div>
+            <h3>name:</h3>
+            <input type="text" placeholder="Enter your name">
+        </div>
+        
+        <div>
+            <h3>select date:</h3>
+            <input type="date">
+        </div>
+         <div>
+            <h3>select week:</h3>
+            <input type="week">
+        </div>
+         <div>
+            <h3>select time:</h3>
+            <input type="time">
+        </div>
+         <div>
+            <h3>select month:</h3>
+            <input type="month">
+        </div>
+
+        <div>
+            <h3>select date of birth:</h3>
+            <input type="datetime-local">
+        </div>
+
+        <div>
+            <h3>age:</h3>
+            <input type="number" placeholder="Enter your age">
+        </div>
+
+        <div>
+            <h3>email:</h3>
+            <input type="email" placeholder="Enter your email">
+        </div>
+
+        <div>
+            <h3>password:</h3>
+            <input type="password" placeholder="Enter your password">
+        </div>
+
+         <div>
+            <h3>mobile number:</h3>
+            <input type="tel" placeholder="Enter your phone number">
+        </div>
+
+        <div>
+            <h3>select gender:</h3>
+            <input type="radio" name="gender" value="male">Male
+            <input type="radio" name="gender" value="female">Female
+        </div>
+
+        <div>
+            <h3>select you courses:</h3>    
+            <input type="checkbox" id="couse1" name="course1" value="html">
+            <label for="couse1">html</label><br>
+           <input type="checkbox" id="couse2" name="course2" value="css">
+            <label for="couse2">css</label><br>
+            <input type="checkbox" id="couse3" name="course3" value="javaScript">
+            <label for="couse3">javaScript</label><br>
+            <input type="checkbox" id="couse4" name="course4" value="react.js">
+            <label for="couse4">React.js</label><br>
+            <input type="checkbox" id="couse5" name="course5" value="java">
+            <label for="couse5">Java</label><br>
+        </div>
+        
+        <div>
+            <h3>your favourate color:</h3>
+            <input type="color">
+        </div>
+        <div>
+            <h3>upload your resume:</h3>
+            <input type="file" placeholder="upload file">
+        </div>
+       
+         <div>
+            <h3>feel free to search:</h3>
+            <input type="search" placeholder="Search...">
+            <input type="button" value="search"  onclick="alert('searching for your needs')">
+        </div>
+
+         <div>
+            <h3>portfolio url:</h3>
+            <input type="url" placeholder="Enter your website URL">
+        </div>
+
+        <div>
+            <h3>select your english level </h3>
+            <input type="range" min="0" max="100"> 
+            <pre><h4>low          expert</h4></pre>
+        </div>
+         
+        <br>
+        <br>
+        <div>
+            <input type="reset" value="Reset" onclick="alert('Form reset!')">
+        </div>
+        <div>
+            <input type="button" value="Submit"  onclick="alert('Form submitted!')">
+        </div>
+
+
+
+         <div>
+            <input type="hidden" value="hidden value">  
+        </div>
+    </form>
+</body>
+</html>
