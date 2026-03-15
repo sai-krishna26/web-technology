@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel World - Booking & Feedback Form</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="destinations.html">Destinations</a>
+                <a href="booking.html">Booking</a>
+                <a href="feedback.html">Feedback</a>
+                <a href="wiki.html">Wiki</a>
+                <a href="iframe.html">Iframe</a>
+                <a href="website.html">Website</a>
+                <a href="Form.html">Form</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Travel Booking & Feedback Form</h1>
+
+    <!-- <form oninput="total_days.value = (new Date(end_date.value) - new Date(start_date.value)) / (1000 * 60 * 60 * 24)"> -->
+        <fieldset>
+            <legend>Traveler Details</legend>
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required><br><br>
+
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required><br><br>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone"><br><br>
+
+            <label for="passport">Passport Number:</label>
+            <input type="text" id="passport" name="passport"><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Trip Details</legend>
+            <label for="destination">Where would you like to go?</label>
+            <input list="destinations" name="destination" id="destination">
+            <datalist id="destinations">
+                <option value="Paris, France">
+                <option value="Tokyo, Japan">
+                <option value="Bali, Indonesia">
+                <option value="New York, USA">
+                <option value="London, UK">
+            </datalist><br><br>
+
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date"><br><br>
+
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date"><br><br>
+
+            <label>Calculated Trip Duration (Days): </label>
+            <input type="text" id="duration" name="duration"><br><br>
+
+            <label for="package">Select Package:</label>
+            <select id="package" name="package">
+                <optgroup label="Budget">
+                    <option value="eco">Economy</option>
+                    <option value="std">Standard</option>
+                </optgroup>
+                <optgroup label="Luxury">
+                    <option value="deluxe">Deluxe</option>
+                    <option value="premium">Premium Plus</option>
+                </optgroup>
+            </select><br><br>
+
+            <label for="participants">Number of Travelers:</label>
+            <input type="number" id="participants" name="participants" min="1" max="10" value="1"><br><br>
+
+            <label for="budget">Set your maximum budget ($):</label>
+            <input type="range" id="budget" name="budget" min="500" max="10000" step="100" value="2000"><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Preferences & Documentation</legend>
+            <label>Interests:</label><br>
+            <input type="checkbox" id="hiking" name="interest" value="hiking">
+            <label for="hiking"> Hiking</label><br>
+            <input type="checkbox" id="beach" name="interest" value="beach">
+            <label for="beach"> Beach</label><br>
+            <input type="checkbox" id="culture" name="interest" value="culture">
+            <label for="culture"> Culture & History</label><br><br>
+
+            <label>Accommodation Preference:</label>
+            <input type="radio" id="hotel" name="stay" value="hotel">
+            <label for="hotel">Hotel</label>
+            <input type="radio" id="hostel" name="stay" value="hostel">
+            <label for="hostel">Hostel</label>
+            <input type="radio" id="resort" name="stay" value="resort">
+            <label for="resort">Resort</label><br><br>
+
+            <label for="comments">Additional Comments/Feedback:</label><br>
+            <textarea id="comments" name="comments" rows="4" cols="50" placeholder="Tell us about your previous travel experience with us or any specific requirements..."></textarea><br><br>
+
+            <label for="theme_color">Choose your favorite color for the travel brochure:</label>
+            <input type="color" id="theme_color" name="theme_color" value="#0000ff"><br><br>
+
+            <label for="id_doc">Upload ID Proof (Passport Copy):</label>
+            <input type="file" id="id_doc" name="id_doc"><br><br>
+
+            <label for="reminder_time">When would you like to receive travel reminders?</label>
+            <input type="time" id="reminder_time" name="reminder_time"><br><br>
+        </fieldset>
+
+        <br>
+        <button type="button" onclick="alert('Booking Initiated!')">Check Availability</button>
+        <input type="submit" value="Submit Booking">
+        <input type="reset" value="Clear Form">
+    <!-- </form> -->
+
+</body>
+</html>

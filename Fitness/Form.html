@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Club - Registration Form</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="trainer.html">Trainer</a>
+                <a href="equipment.html">Equipment</a>
+                <a href="features.html">Features</a>
+                <a href="regestrationform.html">Regestration Form</a>
+                <a href="wiki.html">Wiki</a>
+                <a href="iframe.html">iframe</a>
+                <a href="website.html">fitness</a>
+                <a href="Form.html">Form</a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Fitness Club Membership Form</h1>
+
+    <!-- <form oninput="bmi.value = (weight.value / ((height.value / 100) * (height.value / 100))).toFixed(2)"> -->
+        <fieldset>
+            <legend>Personal Details</legend>
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required><br><br>
+
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="tel">Phone Number:</label>
+            <input type="tel" id="tel" name="tel" placeholder="123-456-7890"><br><br>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob"><br><br>
+
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+            <input type="radio" id="other" name="gender" value="other">
+            <label for="other">Other</label><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Physical Stats</legend>
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" min="20" max="250" value="70"><br><br>
+
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" name="height" min="100" max="250" value="170"><br><br>
+
+            <label>Your calculated BMI:</label>
+            <input type="number" id="bmi" name="bmi" min="0"max="100" value="0"><br><br>
+
+            <label for="theme">Choose your workout theme color:</label>
+            <input type="color" id="theme" name="theme" value="#00ff00"><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Membership Plan</legend>
+            <label for="plan">Plan Type:</label>
+            <select id="plan" name="plan">
+                <optgroup label="Basic">
+                    <option value="monthly">Monthly</option>
+                    <option value="quarterly">Quarterly</option>
+                </optgroup>
+                <optgroup label="Premium">
+                    <option value="halfyearly">Half Yearly</option>
+                    <option value="yearly">Yearly</option>
+                </optgroup>
+            </select><br><br>
+
+            <label for="goal">Fitness Goal:</label>
+            <input list="goals" name="goal" id="goal">
+            <datalist id="goals">
+                <option value="Weight Loss">
+                <option value="Muscle Gain">
+                <option value="General Fitness">
+                <option value="Athletic Training">
+                <option value="Yoga & Flexibility">
+            </datalist><br><br>
+
+            <label for="intensity">Training Intensity (1-10):</label>
+            <input type="range" id="intensity" name="intensity" min="1" max="10" value="5"><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Interests & Medical</legend>
+            <label>Interested In:</label><br>
+            <input type="checkbox" id="cardio" name="interest" value="cardio">
+            <label for="cardio"> Cardio</label><br>
+            <input type="checkbox" id="weights" name="interest" value="weights">
+            <label for="weights"> Weights</label><br>
+            <input type="checkbox" id="yoga" name="interest" value="yoga">
+            <label for="yoga"> Yoga</label><br><br>
+
+            <label for="medhistory">Medical History (if any):</label><br>
+            <textarea id="medhistory" name="medhistory" rows="4" cols="50" placeholder="List any medical conditions..."></textarea><br><br>
+
+            <label for="photo">Upload Profile Photo:</label>
+            <input type="file" id="photo" name="photo"><br><br>
+        </fieldset>
+
+        <br>
+        <button type="button" onclick="alert('Welcome to Fitness Club!')">Join Now</button>
+        <input type="submit" value="Register Membership">
+        <input type="reset" value="Clear">
+    <!-- </form> -->
+
+</body>
+</html>

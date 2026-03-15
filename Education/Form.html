@@ -1,67 +1,118 @@
-<form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education - Student Registration Form</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="courses.html">Courses</a>
+                <a href="login.html">Login</a>
+                <a href="feedback.html">Feedback</a>
+                <a href="signup.html">Signup</a>
+                <a href="wiki.html">Wiki</a>
+                <a href="iframe.html">iframe</a>
+                <a href="website.html">website</a>
+                <a href="Form.html">Form</a>
+            </li>
+        </ul>
+    </nav>
 
-<h1>Registration Form</h1>
+    <h1>Student Registration Form</h1>
 
-<label>Name:</label>
-<input type="text" placeholder="Enter your name"><br><br>
+    <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">
+        <fieldset>
+            <legend>Personal Information</legend>
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required><br><br>
 
-<label>Select Date:</label>
-<input type="date"><br><br>
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required><br><br>
 
-<label>Select Week:</label>
-<input type="week"><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="example@domain.com"><br><br>
 
-<label>Select Time:</label>
-<input type="time"><br><br>
+            <label for="pwd">Password:</label>
+            <input type="password" id="pwd" name="pwd"><br><br>
 
-<label>Select Month:</label>
-<input type="month"><br><br>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob"><br><br>
 
-<label>Date of Birth:</label>
-<input type="datetime-local"><br><br>
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label><br><br>
+        </fieldset>
 
-<label>Age:</label>
-<input type="number" placeholder="Enter age"><br><br>
+        <fieldset>
+            <legend>Academic Details</legend>
+            <label for="course">Interested Course:</label>
+            <select id="course" name="course">
+                <optgroup label="Programming">
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value="cpp">C++</option>
+                </optgroup>
+                <optgroup label="Web Development">
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="js">JavaScript</option>
+                </optgroup>
+            </select><br><br>
 
-<label>Email:</label>
-<input type="email" placeholder="Enter email"><br><br>
+            <label for="browser">Choose your preferred browser:</label>
+            <input list="browsers" name="browser" id="browser">
+            <datalist id="browsers">
+                <option value="Chrome">
+                <option value="Firefox">
+                <option value="Edge">
+                <option value="Safari">
+                <option value="Opera">
+            </datalist><br><br>
 
-<label>Password:</label>
-<input type="password"><br><br>
+            <label for="experience">Years of Experience (0-10):</label>
+            <input type="range" id="experience" name="experience" min="0" max="10"><br><br>
 
-<label>Mobile Number:</label>
-<input type="tel"><br><br>
+            <label for="certificates">Upload Certificates:</label>
+            <input type="file" id="certificates" name="certificates"><br><br>
+        </fieldset>
 
-<label>Gender:</label>
-<input type="radio" name="gender">Male
-<input type="radio" name="gender">Female
-<br><br>
+        <fieldset>
+            <legend>Preferences & Skills</legend>
+            <label>Skills:</label><br>
+            <input type="checkbox" id="skill1" name="skill" value="Communication">
+            <label for="skill1"> Communication</label><br>
+            <input type="checkbox" id="skill2" name="skill" value="Teamwork">
+            <label for="skill2"> Teamwork</label><br>
+            <input type="checkbox" id="skill3" name="skill" value="ProblemSolving">
+            <label for="skill3"> Problem Solving</label><br><br>
 
-<label>Courses:</label><br>
-<input type="checkbox" name="course" value="html">HTML<br>
-<input type="checkbox" name="course" value="css">CSS<br>
-<input type="checkbox" name="course" value="js">JavaScript<br>
-<input type="checkbox" name="course" value="react">React<br>
-<input type="checkbox" name="course" value="java">Java<br><br>
+            <label for="favcolor">Choose your favorite color for theme:</label>
+            <input type="color" id="favcolor" name="favcolor" value="#ff0000"><br><br>
 
-<label>Favorite Color:</label>
-<input type="color"><br><br>
+            <label for="age">Current Age:</label>
+            <input type="number" id="age" name="age" min="15" max="100"><br><br>
 
-<label>Upload Resume:</label>
-<input type="file"><br><br>
+            <label for="bio">Short Bio:</label><br>
+            <textarea id="bio" name="bio" rows="4" cols="50" placeholder="Tell us about yourself..."></textarea><br><br>
+        </fieldset>
 
-<label>Search:</label>
-<input type="search">
-<input type="button" value="Search"><br><br>
+        <fieldset>
+            <legend>Calculation (for test purposes)</legend>
+            0 <input type="range" id="a" value="50"> 100 +
+            <input type="number" id="b" value="50"> =
+            <output name="x" for="a b"></output>
+        </fieldset>
 
-<label>Portfolio URL:</label>
-<input type="url"><br><br>
+        <br>
+        <button type="button" onclick="alert('Form Submitted!')">Register</button>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Clear Form">
+    </form>
 
-<label>English Level:</label>
-Low <input type="range"> Expert
-<br><br>
-
-<input type="reset">
-<input type="submit">
-
-</form>
+</body>
+</html>
