@@ -1,0 +1,10 @@
+#button
+{
+    border-radius: 5px;
+    border-color: rgb(214, 52, 7);
+    color: brown;   
+}
+body
+{
+    background:linear-gradient(to left, rgb(70, 70, 154),orange);
+}
