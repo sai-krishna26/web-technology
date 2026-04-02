@@ -1,0 +1,35 @@
+body {
+    background: linear-gradient(to left,rgb(58, 58, 55),rgb(181, 170, 172),rgb(228, 206, 164));
+}
+#button
+{
+    display: block;
+    border: 5px solid var(--bs-success-border-subtle);
+    padding: 8px;
+    color: #fdfdfd;
+    margin: 0 auto;
+    background-color: #90A4AE;
+    
+}
+#button:hover
+{
+    background: linear-gradient(to left,yellow,pink,orange);
+}
+
+.container
+{
+    border: 5px solid rgba(37, 135, 135, 0.648);
+
+}
+.container:hover
+{
+    background: linear-gradient(to left,yellow,pink,orange);
+}
+
+.code
+{
+    position:center;
+    font-size:30px;
+    color: #511768;
+    word-wrap: break-word;
+}
