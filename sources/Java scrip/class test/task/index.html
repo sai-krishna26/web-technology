@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h2>Regestration Form</h2>
+    <form name="RegestratiionForm" onsubmit="ValidateForm()">
+    <div>
+        <label for="nameId">Name</label>
+        <span style="color: red;">*</span>
+        <span>:</span>
+        <input type="text" name="nameValue" id="nameId" required />
+    </div>
+    <div>
+        <label for="emaiId">Email</label>
+        <span style="color: red;">*</span>
+        <span>:</span>
+        <input type="email" name="emailValue" id="emailId" required />
+    </div>
+    <div>
+        <label for="passwordId">Password</label>
+        <span style="color: red;">*</span>
+        <span>:</span>
+        <input type="password" name="passwordValue" id="passwordId" required />
+    </div>
+    <div>
+        <label for="telId">Mobile Number</label>
+        <span>:</span>
+        <input type="tel" name="telValue" id="telId"/>
+    </div>
+    <div>
+        <label for="numberId">Age</label>
+        <span>:</span>
+        <input type="number" name="numberValue" id="numberId"/>
+    </div>
+
+    <br>
+     <div>
+        <label for="fileId">file</label>
+        <span>:</span>
+        <input type="file" name="fileValue" id="fileId"/>
+    </div>
+    <br>
+    <br>
+    <div>
+        <button type="submit" value="submit">submit</button>
+        <button type="reset" value="clear">clear</button>
+    </div>
+
+    </form>
+</body>
+</html>
