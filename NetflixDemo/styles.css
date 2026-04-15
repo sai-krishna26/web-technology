@@ -130,8 +130,6 @@ body {
 }
 
 #get_started {
-    height: 60px;
-    width: 200px;
     background-color: red;
     color: white;
     border: none;
@@ -141,7 +139,7 @@ body {
      width: 300px;
     height: 80px;
     font-weight: bolder;
-    font-size: 28px;
+    font-size: 27px;
 }
 
 #get_started:hover {
@@ -199,3 +197,80 @@ body {
     border-radius: 8px;
 }
 
+/* frequently asked questions */
+/* .according-item
+{
+    background-color: rgb(30, 30, 30);
+    border: none;
+    margin-bottom: 8px;
+} */
+.accordion-button {
+  background-color: #1d1c1c;
+  color: white;
+  font-size: 22px;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #1d1c1c;
+  color: white;
+  box-shadow: none;
+}
+
+.accordion-button::after {
+  filter: invert(1);
+}
+
+.accordion-body {
+  background-color: #000000;
+  color: white;
+  font-size: 17px;
+}
+
+
+#sub_text2{
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    margin-top: 50px;
+    margin-bottom: none;
+    text-align: center;
+}
+
+.creds2
+{
+    margin-left: 50px;
+   text-align: center;
+   padding-bottom: 25px;
+}
+
+#email2 {
+    height: 50px;
+    width: 600px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    /* padding-left: 20px; */
+}
+
+#email2::placeholder {
+    padding-left: 50px;
+    font-size: 20px;
+}
+
+
+#get_started2 {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 18px;
+    margin-left: 10px;
+     width: 300px;
+    height: 50px;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+#get_started2:hover {
+    background-color: darkred;
+}
