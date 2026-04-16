@@ -52,7 +52,7 @@ body {
     align-items: center;
     gap: 20px;
     padding-top: 50px;
-    padding-right: 130px;
+    padding-right: 50px;
 }
 
 .language-box {
@@ -73,7 +73,7 @@ body {
     height: 40px;
     font-size: 20px;
     text-align: center;
-    background-color: rgb(29, 27, 27);
+    background-color: rgba(0, 0, 0, 0.588);
 }
 
 #sign-in {
@@ -273,4 +273,49 @@ body {
 
 #get_started2:hover {
     background-color: darkred;
+}
+
+
+#question
+{
+    margin-left:150px ;
+   color: white; 
+   text-decoration: none;
+}
+
+.footer{
+  display: flex;
+  justify-content: space-between; /* pushes left and right */
+  align-items: flex-start;
+  margin-left: 150px;
+}
+
+.footer a
+{
+    color: white;
+}
+
+.footer ul li
+{
+    padding-bottom:8px;
+}
+
+.scrap, .scrap1 {
+  list-style: none;
+  padding: 0;
+}
+
+
+#netflixIndia
+{
+    color:#ffffff ;
+    margin-left: 150px;
+    text-decoration: none;
+}
+
+#last
+{
+    color: #939292;
+    text-decoration:none;
+    margin-left: 150px; 
 }
