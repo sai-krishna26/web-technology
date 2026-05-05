@@ -1,16 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-const API_KEY = "d5dfe34a324b24ba6f87a0b8bc8646d2";  // 🔁 Replace with your real key
+
+ document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            closeTrailer();
+        }
+    });
+
+const API_KEY = "d5dfe34a324b24ba6f87a0b8bc8646d2";   // 🔁 put your real key here
 const BASE_IMG = "https://image.tmdb.org/t/p/w500";
 
-// Fetch trending movies
+// 🔥 Fetch trending movies
 async function fetchTrending() {
     const grid = document.querySelector(".grid");
 
     if (!grid) {
         console.error("❌ .grid not found");
         return;
-    }
+    } 
 
     grid.innerHTML = "<p style='color:white'>Loading...</p>";
 
@@ -19,17 +26,7 @@ async function fetchTrending() {
             `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
         );
 
-        if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-
         const data = await res.json();
-
-        console.log("API DATA:", data); // 🔍 Debug
-
-        if (!data.results) {
-            throw new Error("Invalid API response");
-        }
 
         displayMovies(data.results);
 
@@ -39,7 +36,7 @@ async function fetchTrending() {
     }
 }
 
-// Display movies
+// 🎬 Display movies
 function displayMovies(movies) {
     const grid = document.querySelector(".grid");
     grid.innerHTML = "";
@@ -52,41 +49,63 @@ function displayMovies(movies) {
         img.className = "trending";
         img.title = movie.title;
 
-        img.addEventListener("click", () => {
-           img.addEventListener("click", () => {
-    const popup = document.createElement("div");
-    popup.className = "movie-popup";
+        // 🔥 CLICK → PLAY TRAILER
+        img.addEventListener("click", async () => {
+            try {
+                const res = await fetch(
+                    `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`
+                );
 
-    popup.innerHTML = `
-        <div class="popup-content">
-            <span class="close-btn">&times;</span>
-            <img src="${BASE_IMG + movie.poster_path}" class="popup-img">
-            <h2>${movie.title}</h2>
-            <p>⭐ ${movie.vote_average}</p>
-            <p style="font-size:14px; margin-top:10px;">
-                ${movie.overview || "No description available"}
-            </p>
-        </div>
-    `;
+                const data = await res.json();
 
-    document.body.appendChild(popup);
+                const trailer = data.results.find(
+                    v => v.type === "Trailer" && v.site === "YouTube"
+                );
 
-    // Close popup
-    popup.querySelector(".close-btn").onclick = () => popup.remove();
+                if (!trailer) {
+                    alert("Trailer not available");
+                    return;
+                }
 
-    // Click outside to close
-    popup.addEventListener("click", (e) => {
-        if (e.target === popup) popup.remove();
-    });
-});
+                playTrailer(trailer.key);
+
+            } catch (error) {
+                console.error("Trailer fetch error:", error);
+            }
         });
 
         grid.appendChild(img);
     });
 }
 
-// Run
+// 🎥 Play trailer
+function playTrailer(key) {
+    const modal = document.getElementById("trailerModal");
+    const frame = document.getElementById("trailerFrame");
+
+    modal.style.display = "block";
+    frame.src = `https://www.youtube.com/embed/${key}?autoplay=1`;
+}
+
+// ❌ Close trailer
+function closeTrailer() {
+    const modal = document.getElementById("trailerModal");
+    const frame = document.getElementById("trailerFrame");
+
+    modal.style.display = "none";
+    frame.src = "";
+}
+
+function outsideClick(e) {
+    if (e.target.id === "trailerModal") {
+        closeTrailer();
+    }
+}
+
+// 🌍 Make close function global (for HTML onclick)
+window.closeTrailer = closeTrailer;
+
+// 🚀 Run
 fetchTrending();
 
 });
-

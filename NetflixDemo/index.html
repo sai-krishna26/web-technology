@@ -18,7 +18,7 @@
 <div class="img">
 
     <div class="header">
-        <p class="logo">NETFLIX</p>
+        <p class="logo">NETPRIME</p>
 
         <div class="right-section">
             <div class="language-box">
@@ -74,6 +74,16 @@
     </div>
 
 </div>
+
+<!-- <div onclick="playTrailer('VIDEO_KEY')">
+    <img src="poster.jpg" class="trending">
+</div> -->
+
+<div id="trailerModal" class="modal" onclick="outsideClick(event)">
+  <span class="close" onclick="closeTrailer()">&times;</span>
+  <iframe id="trailerFrame" allow="autoplay; fulscreen" allowfullscreen></iframe>
+</div>
+
 <br>
 <br>
 <h3 id="buttomText">More reasons to join</h3>
