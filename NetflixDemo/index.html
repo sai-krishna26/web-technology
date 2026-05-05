@@ -50,6 +50,28 @@
     </div>
 </div>
 
+<div class="controls">
+
+    <h3>How are you feeling today?</h3>
+
+    <div class="mood-buttons">
+        <button onclick="setMood('happy')">Happy</button>
+        <button onclick="setMood('sad')">Sad</button>
+        <button onclick="setMood('confused')">Confused</button>
+    </div>
+
+    <div class="language-select">
+        <select onchange="setLanguage(this.value)">
+            <option value="">All Languages</option>
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="ko">Korean</option>
+            <option value="ja">Japanese</option>
+        </select>
+    </div>
+
+</div>
+
 <br>
 <hr class="curve">
 <h3 id="buttomText">Trending now</h3>

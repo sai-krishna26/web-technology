@@ -363,6 +363,82 @@ body {
     cursor: pointer;
 }
 
+.wishlist-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    background: rgba(0,0,0,0.6);
+    border: none;
+    color: white;
+    font-size: 18px;
+
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.wishlist-btn:hover {
+    background: red;
+    transform: scale(1.1);
+}
+
+
+.controls {
+    text-align: center;
+    margin: 40px auto;
+    color: white;
+}
+
+.controls h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.mood-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.mood-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.mood-buttons button:hover {
+    background: red;
+    transform: scale(1.05);
+}
+
+.language-select select {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: rgba(18, 18, 18, 0.79);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.controls {
+    backdrop-filter: blur(10px);
+}
+
+.language-select select:hover {
+    background: rgba(255,255,255,0.2);
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
