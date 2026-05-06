@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix</title>
+    <title>NETPRIME — Watch Anywhere</title>
 
     <link rel="icon" type="image/png" sizes="32x32" href="n.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="theme-dark">
 
-
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     HERO SECTION
+═══════════════════════════════════════════════════════════════════════════ -->
 <div class="img">
 
+    <!-- ── Top Navigation ── -->
     <div class="header">
         <p class="logo">NETPRIME</p>
 
         <div class="right-section">
+            <!-- Language Selector -->
             <div class="language-box">
                 <span class="icon"><i class="fa-solid fa-language"></i></span>
                 <select id="lang">
@@ -30,10 +33,26 @@
                 </select>
             </div>
 
-            <button id="sign-in">Sign In</button>
-        </div>  
+            <!-- Theme Toggle -->
+            <button id="themeToggle" class="theme-btn" onclick="cycleTheme()" title="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- User Menu (shown when logged in) -->
+            <div id="userMenu" style="display:none;" class="user-menu-header">
+                <span id="headerUsername" class="header-username"></span>
+                <a href="wishlist.html" class="nav-icon-btn" title="My Wishlist">
+                    <i class="fas fa-heart"></i>
+                </a>
+                <button onclick="logout()" class="sign-in-btn">Sign Out</button>
+            </div>
+
+            <!-- Sign In (shown when logged out) -->
+            <button id="sign-in" onclick="window.location.href='login.html'">Sign In</button>
+        </div>
     </div>
 
+    <!-- ── Hero Text ── -->
     <div class="header2">
         <p id="welcome_text">Unlimited movies,<br>shows and more</p>
 
@@ -44,298 +63,261 @@
 
         <div class="creds">
             <input type="email" placeholder="Email address" id="email" required>
-            <button id="get_started">Get Started ></button>
+            <button id="get_started">Get Started &gt;</button>
         </div>
-        
     </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     SMART CONTROLS
+═══════════════════════════════════════════════════════════════════════════ -->
 <div class="controls">
 
     <h3>How are you feeling today?</h3>
 
+    <!-- Mood Buttons -->
     <div class="mood-buttons">
-        <button onclick="setMood('happy')">Happy</button>
-        <button onclick="setMood('sad')">Sad</button>
-        <button onclick="setMood('confused')">Confused</button>
+        <button onclick="setMood('happy')" id="mood-happy">
+            <i class="fas fa-smile"></i> Happy
+        </button>
+        <button onclick="setMood('sad')" id="mood-sad">
+            <i class="fas fa-sad-tear"></i> Sad
+        </button>
+        <button onclick="setMood('excited')" id="mood-excited">
+            <i class="fas fa-fire"></i> Excited
+        </button>
+        <button onclick="setMood('confused')" id="mood-confused">
+            <i class="fas fa-question-circle"></i> Confused
+        </button>
     </div>
 
+    <!-- Language Learning Mode -->
     <div class="language-select">
-        <select onchange="setLanguage(this.value)">
-            <option value="">All Languages</option>
-            <option value="en">English</option>
-            <option value="hi">Hindi</option>
-            <option value="ko">Korean</option>
-            <option value="ja">Japanese</option>
+        <select onchange="setLanguage(this.value)" id="langFilter">
+            <option value="">🌍 All Languages</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="hi">🇮🇳 Hindi</option>
+            <option value="ko">🇰🇷 Korean</option>
+            <option value="ja">🇯🇵 Japanese</option>
+            <option value="fr">🇫🇷 French</option>
+            <option value="es">🇪🇸 Spanish</option>
         </select>
     </div>
 
+    <!-- Voice Search -->
+    <button class="voice-btn" onclick="startVoiceSearch()" title="Voice Search">
+        <i class="fas fa-microphone"></i> Voice Search
+    </button>
+
+    <!-- Active Filters Display -->
+    <div id="activeFilters" class="active-filters"></div>
+
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     CONTINUE WATCHING (shown only when user has history)
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="continueWatchingSection" style="display:none;">
+    <br>
+    <hr class="curve">
+    <h3 id="continueWatchingTitle">Continue Watching</h3>
+    <div class="image-section">
+        <div class="slider-wrapper">
+            <button class="scroll-btn left" id="cwLeft">&#10094;</button>
+            <div class="grid" id="continueWatchingGrid"></div>
+            <button class="scroll-btn right" id="cwRight">&#10095;</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TRENDING / RECOMMENDED MOVIES
+═══════════════════════════════════════════════════════════════════════════ -->
 <br>
 <hr class="curve">
 <h3 id="buttomText">Trending now</h3>
 <div class="image-section">
-
     <div class="slider-wrapper">
-
-        <button class="scroll-btn left">&#10094;</button>
-
-        <div class="grid">
-            <!-- <div><img src="Dhurandhar.png" class="trending"></div>
-            <div><img src="kapil.png" class="trending"></div>
-            <div><img src="paradise.png" class="trending"></div>
-            <div><img src="peddi.png" class="trending"></div>
-            <div><img src="toxic.png" class="trending"></div>
-            <div><img src="dragon.jpg" class="trending"></div>
-            <div><img src="border2.png" class="trending"></div> -->
+        <button class="scroll-btn left" id="mainLeft">&#10094;</button>
+        <div class="grid" id="mainGrid">
+            <!-- Movies loaded by JS -->
         </div>
-
-        <button class="scroll-btn right">&#10095;</button>
-
+        <button class="scroll-btn right" id="mainRight">&#10095;</button>
     </div>
-
 </div>
 
-<!-- <div onclick="playTrailer('VIDEO_KEY')">
-    <img src="poster.jpg" class="trending">
-</div> -->
-
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     TRAILER MODAL (Full Screen)
+═══════════════════════════════════════════════════════════════════════════ -->
 <div id="trailerModal" class="modal" onclick="outsideClick(event)">
-  <span class="close" onclick="closeTrailer()">&times;</span>
-  <iframe id="trailerFrame" allow="autoplay; fulscreen" allowfullscreen></iframe>
+    <span class="close" onclick="closeTrailer()">&times;</span>
+    <iframe id="trailerFrame" allow="autoplay; fullscreen" allowfullscreen></iframe>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     MOVIE DETAILS MODAL
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="detailsModal" class="details-modal" onclick="closeDetailsOutside(event)">
+    <div class="details-content" id="detailsContent">
+        <!-- Loaded by JS -->
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     WHY JOIN SECTION
+═══════════════════════════════════════════════════════════════════════════ -->
 <br>
 <br>
 <h3 id="buttomText">More reasons to join</h3>
 <br>
 <div class="card-container">
-<div class="card mb-3" style="max-width: 18rem; background:transparent; color: azure; border-color:rgb(250, 3, 3); border-radius: 15px;" >
-  <div class="card-header"><b>Enjoy on your TV</b></div>
-  <div class="card-body">
-    <!-- <h5 class="card-title">Primary card title</h5> -->
-    <p class="card-text">Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more.</p>
-    <svg xmlns="http://www.w3.org/2000/svg" 
-     width="70"
-     height="80"
-     fill="currentColor" 
-     style="color: rgb(212, 0, 0);"
-     class="bi bi-tv-fill float-end" 
-     viewBox="0 0 16 16">
-    <path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5M2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2"/>
-</svg>
-  </div>
+    <div class="card mb-3" style="max-width:18rem; background:transparent; color:azure; border-color:rgb(250,3,3); border-radius:15px;">
+        <div class="card-header"><b>Enjoy on your TV</b></div>
+        <div class="card-body">
+            <p class="card-text">Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more.</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="80" fill="currentColor" style="color:rgb(212,0,0);" class="bi bi-tv-fill float-end" viewBox="0 0 16 16">
+                <path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5M2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width:18rem; background:transparent; color:azure; border-color:rgb(250,3,3); border-radius:15px;">
+        <div class="card-header"><b>Download your shows to watch offline</b></div>
+        <div class="card-body">
+            <p class="card-text">Save your favourites easily and always have something to watch.</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="100" fill="currentColor" style="color:rgb(212,0,0);" class="bi bi-cloud-arrow-down-fill float-end" viewBox="0 0 16 16">
+                <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width:18rem; background:transparent; color:azure; border-color:rgb(250,3,3); border-radius:15px;">
+        <div class="card-header"><b>Watch everywhere</b></div>
+        <div class="card-body">
+            <p class="card-text">Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="60" fill="currentColor" style="color:rgb(212,0,0);" class="bi bi-camera-reels-fill float-end" viewBox="0 0 16 16">
+                <path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                <path d="M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                <path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width:18rem; background:transparent; color:azure; border-color:rgb(250,3,3); border-radius:15px;">
+        <div class="card-header"><b>Create profiles for kids</b></div>
+        <div class="card-body">
+            <p class="card-text">Send kids on adventures with their favourite characters in a space made just for them — free with your membership.</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="60" fill="currentColor" style="color:rgb(212,0,0);" class="bi bi-emoji-smile-fill float-end" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8"/>
+            </svg>
+        </div>
+    </div>
 </div>
 
-<div class="card mb-3" style="max-width: 18rem; background:transparent; color: azure; border-color:rgb(250, 3, 3); border-radius: 15px;;" >  
-  <div class="card-header"><b>Download your shows to watch offline</b></div>
-  <div class="card-body">
-    <!-- <h5 class="card-title">Secondary card title</h5> -->
-    <p class="card-text">Save your favourites easily and always have something to watch.</p>
-    <svg xmlns="http://www.w3.org/2000/svg"
-     width="70"
-     height="100" 
-     fill="currentColor" 
-     style="color: rgb(212, 0, 0);"
-     class="bi bi-cloud-arrow-down-fill float-end" 
-     viewBox="0 0 16 16">
-    <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708"/>
-</svg>
-  
-</div>
-</div>
-
-<div class="card mb-3" style="max-width: 18rem; background:transparent; color: azure; border-color:rgb(250, 3, 3); border-radius: 15px;;" >
-  <div class="card-header"><b>Watch everywhere</b></div>
-  <div class="card-body">
-    <!-- <h5 class="card-title">Success card title</h5> -->
-    <p class="card-text">Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.</p>
-    <svg xmlns="http://www.w3.org/2000/svg" 
-    width="70" 
-    height="60" 
-    fill="currentColor"
-    style="color: rgb(212, 0, 0);"
-    class="bi bi-camera-reels-fill float-end" 
-    viewBox="0 0 16 16">
-    <path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-    <path d="M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
-    <path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>
-</svg>
-</div>
-</div>
-
-<div class="card mb-3" style="max-width: 18rem; background:transparent; color: azure; border-color:rgb(250, 3, 3); border-radius: 15px;;" >
-  <div class="card-header"><b>Create profiles for kids</b></div>
-  <div class="card-body">
-    <!-- <h5 class="card-title">Danger card title</h5> -->
-    <p class="card-text">Send kids on adventures with their favourite characters in a space made just for them — free with your membership.</p>
-      <svg xmlns="http://www.w3.org/2000/svg"
-       width="70"
-       height="60"
-       fill="currentColor"
-       style="color: rgb(212, 0, 0);"
-       class="bi bi-emoji-smile-fill float-end"
-       viewBox="0 0 16 16">
-  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8"/>
-</svg>
-</div>
-</div>
-</div>
-<br>
-<br>
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     FAQ SECTION
+═══════════════════════════════════════════════════════════════════════════ -->
+<br><br>
 <h3 id="buttomText">Frequently Asked Questions</h3>
 <br>
 <div class="d-flex justify-content-center">
-    <div class="accordion accordion-flush"
-     id="accordionFlushExample" style="max-width: 1200px; width: 100%;">
-     <!-- item1 -->
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-        What is Netflix?
-      </button>
-    </h2>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Netflix is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries and more – on thousands of internet-connected devices. <br><br>You can watch as much as you want, whenever you want, without a single ad – all for one low monthly price. There's always something new to discover, and new TV shows and movies are added every week!
+    <div class="accordion accordion-flush" id="accordionFlushExample" style="max-width:1200px; width:100%;">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne">What is Netflix?</button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Netflix is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries and more – on thousands of internet-connected devices.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo">How much does Netflix cost?</button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Plans range from ₹149 to ₹649/month. Watch on your smartphone, tablet, Smart TV, laptop, or streaming device.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree">Where can I watch?</button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Watch anywhere, anytime. Sign in with your account to watch instantly on the web or on any internet-connected device.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour">How do I cancel?</button>
+            </h2>
+            <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Netflix is flexible. You can easily cancel your account online in two clicks. There are no cancellation fees.</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven">Is this official Netflix site?</button>
+            </h2>
+            <div id="flush-collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">No, it's not an official site. It's a Netflix clone built for educational purposes.</div>
+            </div>
+        </div>
     </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-        How much does Netflix cost?
-      </button>
-    </h2>
-    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Watch Netflix on your smartphone, tablet, Smart TV, laptop, or streaming device, all for one fixed monthly fee. Plans range from ₹149 to ₹649/month.</div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">Where can I watch?
-      </button>
-    </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Watch anywhere, anytime. Sign in with your Netflix account to watch instantly on the web at netflix.com from your personal computer or on any internet-connected device that offers the Netflix app, including smart TVs, smartphones, tablets, streaming media players and game consoles. <br>
-        <br>You can also download your favourite shows with the iOS or Android app. Use downloads to watch while you're on the go and without an internet connection. Take Netflix with you anywhere.
-    </div>
-    </div>
-  </div>
-
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-        How do I cancel?
-      </button>
-    </h2>
-    <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Netflix is flexible. You can easily cancel your account online in two clicks. There are no cancellation fees – start or stop your account anytime.
-    </div>
-  </div>
-  </div>
-<!-- 5 -->
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-        What can I watch on Netflix?
-      </button>
-    </h2>
-    <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Netflix has an extensive library of feature films, documentaries, shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.
-    </div>
-  </div>
-  </div>
-
-<!-- 6 -->
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix"   aria-expanded="false" aria-controls="flush-collapseSix">
-        Is Netflix good for kids?
-      </button>
-    </h2>
-    <div id="flush-collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and films in their own space.<br><br>Kids profiles come with PIN-protected parental controls that let you restrict the maturity rating of content kids can watch and block specific titles you don’t want kids to see.
-    </div>
-    </div>
-  </div>
-
-  <!-- 7 -->
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven"   aria-expanded="false" aria-controls="flush-collapseSeven">
-        Is this official Netflix site?
-      </button>
-    </h2>
-    <div id="flush-collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">No, its not a officail site, it's just a attempt to clone Netflix.
-    </div>
-    </div>
-  </div>
-</div>
 </div>
 
-
-<p id="sub_text2">
-            Starts at ₹149. Cancel at any time.
-            Ready to watch? Enter your email to create or restart your membership.
-</p>
-
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════════════════ -->
+<p id="sub_text2">Starts at ₹149. Cancel at any time. Ready to watch? Enter your email to create or restart your membership.</p>
 <div class="creds2">
-            <input type="email" placeholder="Email address" id="email2" required>
-            <button id="get_started2">Get Started ></button>
+    <input type="email" placeholder="Email address" id="email2" required>
+    <button id="get_started2">Get Started &gt;</button>
 </div>
 
-<br>
-<br>
-<br>
-  <span id="question">
-    Questions? Call <a href="tel:000-800-919-1743">000-800-919-1743</a>
-  </span>
-<br>
-<br>
+<br><br><br>
+<span id="question">Questions? Call <a href="tel:000-800-919-1743">000-800-919-1743</a></span>
+<br><br>
+
 <div class="footer">
-  <ul class="scrap">
-      <li><a href="#">FAQ</a></li>
-      <li><a href="#">Account</a></li>
-      <li><a href="#">Investor Relations</a></li>
-      <li><a href="#">Ways to Watch</a></li>
-      <li><a href="#">Privacy</a></li>
-      <li><a href="#">Corporate Information</a></li>
-      <li><a href="#">Speed Test</a></li>
-      <li><a href="#">Only on Netflix</a></li>
-  </ul>
-  <br>
-  <ul class="scrap1">
-    <li><a href="#">Help Centre</a></li>
-    <li><a href="#">Media Centre</a></li>
-    <li><a href="#">Job</a></li>
-    <li><a href="#">Terms of Use</a></li>
-    <li><a href="#">Cookie Preferences</a></li>
-    <li><a href="#">Contact Us</a></li>
-    <li><a href="#">Legal Notices</a></li>
-  </ul>
+    <ul class="scrap">
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Account</a></li>
+        <li><a href="#">Investor Relations</a></li>
+        <li><a href="#">Ways to Watch</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Corporate Information</a></li>
+        <li><a href="#">Speed Test</a></li>
+        <li><a href="#">Only on Netflix</a></li>
+    </ul>
+    <br>
+    <ul class="scrap1">
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="#">Media Centre</a></li>
+        <li><a href="#">Jobs</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Cookie Preferences</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Legal Notices</a></li>
+    </ul>
 </div>
-<br>
-<br>
+<br><br>
 
 <p id="netflixIndia">Netflix India</p>
-
 <br>
 <h6 id="last">This page is protected by Google reCAPTCHA to ensure you're not a bot</h6>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="auth.js"></script>
 <script src="script.js"></script>
 
-
+<!-- ── Hero Language Switcher ── -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
     const langSelect = document.getElementById("lang");
 
     const translations = {
         en: {
-            welcome: "Unlimited movies, shows and more",
+            welcome: "Unlimited movies,\nshows and more",
             sub: "Starts at ₹149. Cancel at any time.<br><br>Ready to watch? Enter your email to create or restart your membership."
         },
         hi: {
@@ -353,7 +335,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("sub_text").innerHTML = translations[lang].sub;
     }
 
-    // Load saved language
     const savedLang = localStorage.getItem("lang") || "en";
     langSelect.value = savedLang;
     updateLanguage(savedLang);
@@ -363,12 +344,11 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("lang", lang);
         updateLanguage(lang);
     });
-
 });
 </script>
 
-<p style="color: gray; font-size: 12px; text-align:center;">
-This product uses the TMDB API but is not endorsed or certified by TMDB.
+<p style="color:gray; font-size:12px; text-align:center;">
+    This product uses the TMDB API but is not endorsed or certified by TMDB.
 </p>
 </body>
 </html>
