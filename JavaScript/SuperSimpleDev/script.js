@@ -17,14 +17,17 @@
 //////////////////////////////////////////STRINGS////////////////////////////////////////
 
 
-let asn='Items ('+(1+1)+'): $'+(2234+4434)/100;  
-                                                            //observe the difference between the two methods of string concatenation                                                                         
-let asn2=`Items (${1+1}): $${(2234+443)/100}`;
-console.log(asn);
-console.log(asn2);
+// let asn='Items ('+(1+1)+'): $'+(2234+4434)/100;  
+//                                                             //observe the difference between the two methods of string concatenation                                                                         
+// let asn2=`Items (${1+1}): $${(2234+443)/100}`;
+// console.log(asn);
+// console.log(asn2);
 
 
-let name=`sai
-krishna`;
+// let name=`sai
+// krishna`;
 
-console.log(name);
+// console.log(name);
+
+
+
