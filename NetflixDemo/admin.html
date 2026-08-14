@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - NETPRIME</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="n.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #111;
+            border-right: 1px solid #222;
+            padding: 30px 0;
+            z-index: 100;
+        }
+
+        .sidebar .logo {
+            color: #e50914;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 0 25px 30px;
+            border-bottom: 1px solid #222;
+            display: block;
+        }
+
+        .sidebar .admin-badge {
+            color: #999;
+            font-size: 12px;
+            padding: 10px 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sidebar nav {
+            margin-top: 20px;
+        }
+
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .sidebar nav a:hover,
+        .sidebar nav a.active {
+            background: rgba(229, 9, 20, 0.15);
+            color: white;
+            border-left: 3px solid #e50914;
+        }
+
+        .sidebar nav a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar .logout-btn {
+            position: absolute;
+            bottom: 30px;
+            left: 25px;
+            right: 25px;
+            padding: 12px;
+            background: #e50914;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .sidebar .logout-btn:hover {
+            background: #f40612;
+        }
+
+        /* ── Main Content ── */
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+        }
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* ── Stats Cards ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #e50914;
+        }
+
+        .stat-card .icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card .value {
+            font-size: 42px;
+            font-weight: bold;
+            color: #e50914;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .label {
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* ── Tables ── */
+        .section {
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section h2 i {
+            color: #e50914;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 15px;
+            background: #222;
+            color: #999;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #222;
+            font-size: 15px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .badge-red { background: rgba(229,9,20,0.2); color: #e50914; }
+        .badge-green { background: rgba(0,200,0,0.2); color: #00c800; }
+        .badge-blue { background: rgba(0,100,255,0.2); color: #4488ff; }
+
+        .delete-btn {
+            background: rgba(229,9,20,0.2);
+            border: 1px solid #e50914;
+            color: #e50914;
+            padding: 6px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #e50914;
+            color: white;
+        }
+
+        /* ── Login Gate ── */
+        .login-gate {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 50px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-box .logo {
+            color: #e50914;
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .login-box h2 {
+            margin-bottom: 30px;
+            color: #999;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 14px;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: #e50914;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: #e50914;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-box button:hover {
+            background: #f40612;
+        }
+
+        .error-msg {
+            color: #e50914;
+            margin-top: 15px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Admin Login Gate -->
+    <div class="login-gate" id="loginGate">
+        <div class="login-box">
+            <div class="logo">NETPRIME</div>
+            <h2>Admin Access</h2>
+            <input type="text" id="adminUser" placeholder="Admin Username">
+            <input type="password" id="adminPass" placeholder="Admin Password">
+            <button onclick="adminLogin()">Enter Admin Panel</button>
+            <p class="error-msg" id="adminError">Invalid admin credentials</p>
+            <p style="color:#555; margin-top:20px; font-size:13px;">
+                Default: admin / admin123
+            </p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" style="display:none;">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <span class="logo">NETPRIME</span>
+            <span class="admin-badge">Admin Panel</span>
+            <nav>
+                <a href="#" class="active" onclick="showSection('overview')">
+                    <i class="fas fa-chart-bar"></i> Overview
+                </a>
+                <a href="#" onclick="showSection('users')">
+                    <i class="fas fa-users"></i> Users
+                </a>
+                <a href="#" onclick="showSection('wishlists')">
+                    <i class="fas fa-heart"></i> Wishlists
+                </a>
+                <a href="#" onclick="showSection('watchHistory')">
+                    <i class="fas fa-history"></i> Watch History
+                </a>
+                <a href="index.html">
+                    <i class="fas fa-home"></i> Back to Site
+                </a>
+            </nav>
+            <button class="logout-btn" onclick="adminLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- Overview Section -->
+            <div id="section-overview">
+                <div class="page-header">
+                    <h1>Dashboard Overview</h1>
+                    <p>Welcome back, Admin</p>
+                </div>
+
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Stats loaded by JS -->
+                </div>
+
+                <div class="section">
+                    <h2><i class="fas fa-fire"></i> Most Wishlisted Movies</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Movie</th>
+                                <th>Times Wishlisted</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topWishlistTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="section-users" style="display:none;">
+                <div class="page-header">
+                    <h1>All Users</h1>
+                    <p>Manage registered users</p>
+                </div>
+                <div class="section">
+                    <h2><i class="fas fa-users"></i> User List</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Wishlist</th>
+                                <th>Watched</th>
+                                <th>Joined</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Wishlists Section -->
+            <div id="section-wishlists" style="display:none;">
+                <div class="page-header">
+                    <h1>Wishlist Statistics</h1>
+                    <p>See what users are saving</p>
+                </div>
+                <div class="section">
+                    <h2><i class="fas fa-heart"></i> All Wishlists</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Movies in Wishlist</th>
+                                <th>Top Movie</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wishlistsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Watch History Section -->
+            <div id="section-watchHistory" style="display:none;">
+                <div class="page-header">
+                    <h1>Watch History</h1>
+                    <p>Track what users are watching</p>
+                </div>
+                <div class="section">
+                    <h2><i class="fas fa-history"></i> Most Watched Movies</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Movie</th>
+                                <th>Total Views</th>
+                            </tr>
+                        </thead>
+                        <tbody id="watchHistoryTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // ── Admin Login ──────────────────────────────────────────────────────
+        function adminLogin() {
+            const u = document.getElementById("adminUser").value;
+            const p = document.getElementById("adminPass").value;
+
+            if (u === "admin" && p === "admin123") {
+                document.getElementById("loginGate").style.display = "none";
+                document.getElementById("adminDashboard").style.display = "block";
+                loadDashboard();
+            } else {
+                document.getElementById("adminError").style.display = "block";
+            }
+        }
+
+        function adminLogout() {
+            document.getElementById("loginGate").style.display = "flex";
+            document.getElementById("adminDashboard").style.display = "none";
+        }
+
+        // Check if already logged in as admin
+        const cu = getCurrentUser();
+        if (cu && cu.isAdmin) {
+            document.getElementById("loginGate").style.display = "none";
+            document.getElementById("adminDashboard").style.display = "block";
+            loadDashboard();
+        }
+
+        // ── Section Navigation ───────────────────────────────────────────────
+        function showSection(name) {
+            ["overview", "users", "wishlists", "watchHistory"].forEach(s => {
+                document.getElementById(`section-${s}`).style.display = "none";
+            });
+            document.getElementById(`section-${name}`).style.display = "block";
+
+            // Update active nav
+            document.querySelectorAll(".sidebar nav a").forEach(a => a.classList.remove("active"));
+            event.target.closest("a").classList.add("active");
+        }
+
+        // ── Load Dashboard Data ──────────────────────────────────────────────
+        function loadDashboard() {
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+
+            // Stats
+            const totalUsers = users.length;
+            const totalWishlistItems = users.reduce((sum, u) => sum + (u.wishlist?.length || 0), 0);
+            const totalWatched = users.reduce((sum, u) => sum + (u.watchHistory?.length || 0), 0);
+
+            document.getElementById("statsGrid").innerHTML = `
+                <div class="stat-card">
+                    <div class="icon">👥</div>
+                    <div class="value">${totalUsers}</div>
+                    <div class="label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">❤️</div>
+                    <div class="value">${totalWishlistItems}</div>
+                    <div class="label">Total Wishlist Items</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">🎬</div>
+                    <div class="value">${totalWatched}</div>
+                    <div class="label">Total Movies Watched</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📊</div>
+                    <div class="value">${totalUsers > 0 ? (totalWishlistItems / totalUsers).toFixed(1) : 0}</div>
+                    <div class="label">Avg Wishlist / User</div>
+                </div>
+            `;
+
+            // Top wishlisted movies
+            const movieCount = {};
+            users.forEach(u => {
+                (u.wishlist || []).forEach(m => {
+                    movieCount[m.title] = (movieCount[m.title] || 0) + 1;
+                });
+            });
+
+            const topMovies = Object.entries(movieCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            const wishlistTbody = document.getElementById("topWishlistTable");
+            wishlistTbody.innerHTML = topMovies.length
+                ? topMovies.map(([title, count], i) => `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${title}</td>
+                        <td><span class="badge badge-red">${count} user${count > 1 ? 's' : ''}</span></td>
+                    </tr>
+                `).join("")
+                : `<tr><td colspan="3" style="color:#555; text-align:center;">No wishlist data yet</td></tr>`;
+
+            // Users table
+            const usersTbody = document.getElementById("usersTable");
+            usersTbody.innerHTML = users.length
+                ? users.map(u => `
+                    <tr>
+                        <td>${u.username}</td>
+                        <td>${u.email || "—"}</td>
+                        <td><span class="badge badge-red">${u.wishlist?.length || 0}</span></td>
+                        <td><span class="badge badge-blue">${u.watchHistory?.length || 0}</span></td>
+                        <td style="color:#999; font-size:13px;">${u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "—"}</td>
+                        <td><button class="delete-btn" onclick="deleteUser('${u.username}')">Delete</button></td>
+                    </tr>
+                `).join("")
+                : `<tr><td colspan="6" style="color:#555; text-align:center;">No users registered yet</td></tr>`;
+
+            // Wishlists table
+            const wishlistsTbody = document.getElementById("wishlistsTable");
+            wishlistsTbody.innerHTML = users.length
+                ? users.map(u => `
+                    <tr>
+                        <td>${u.username}</td>
+                        <td><span class="badge badge-green">${u.wishlist?.length || 0} movies</span></td>
+                        <td>${u.wishlist?.[0]?.title || "—"}</td>
+                    </tr>
+                `).join("")
+                : `<tr><td colspan="3" style="color:#555; text-align:center;">No data</td></tr>`;
+
+            // Watch history
+            const watchCount = {};
+            users.forEach(u => {
+                (u.watchHistory || []).forEach(m => {
+                    watchCount[m.title] = (watchCount[m.title] || 0) + 1;
+                });
+            });
+
+            const topWatched = Object.entries(watchCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+
+            const watchTbody = document.getElementById("watchHistoryTable");
+            watchTbody.innerHTML = topWatched.length
+                ? topWatched.map(([title, count], i) => `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${title}</td>
+                        <td><span class="badge badge-blue">${count} view${count > 1 ? 's' : ''}</span></td>
+                    </tr>
+                `).join("")
+                : `<tr><td colspan="3" style="color:#555; text-align:center;">No watch history yet</td></tr>`;
+        }
+
+        // ── Delete User ──────────────────────────────────────────────────────
+        function deleteUser(username) {
+            if (!confirm(`Delete user "${username}"? This cannot be undone.`)) return;
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            users = users.filter(u => u.username !== username);
+            localStorage.setItem("users", JSON.stringify(users));
+            loadDashboard();
+        }
+
+        window.deleteUser = deleteUser;
+        window.showSection = showSection;
+        window.adminLogin = adminLogin;
+        window.adminLogout = adminLogout;
+    </script>
+</body>
+</html>

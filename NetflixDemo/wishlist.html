@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - NETPRIME</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="n.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .wishlist-header {
+            padding: 40px 5vw;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+        }
+
+        .wishlist-header h1 {
+            color: white;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .wishlist-header p {
+            color: #999;
+            font-size: 18px;
+        }
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 40px 5vw;
+        }
+
+        .wishlist-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .wishlist-item:hover {
+            transform: scale(1.05);
+        }
+
+        .wishlist-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .wishlist-item .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(229, 9, 20, 0.9);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .wishlist-item .remove-btn:hover {
+            background: #e50914;
+            transform: scale(1.1);
+        }
+
+        .wishlist-item .info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            padding: 20px 10px 10px;
+            color: white;
+        }
+
+        .wishlist-item .info h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .wishlist-item .info .rating {
+            color: #ffd700;
+            font-size: 14px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+            color: white;
+        }
+
+        .empty-state i {
+            font-size: 80px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .empty-state a {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #e50914;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .empty-state a:hover {
+            background: #f40612;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5vw;
+            background: rgba(0,0,0,0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-nav .logo {
+            color: #e50914;
+            font-size: 32px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .top-nav .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .top-nav .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .top-nav .nav-links a:hover {
+            color: #e50914;
+        }
+
+        .top-nav .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-nav .username {
+            color: white;
+            font-size: 16px;
+        }
+
+        .top-nav .logout-btn {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .top-nav .logout-btn:hover {
+            background: #f40612;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <a href="index.html" class="logo">NETPRIME</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="wishlist.html">My Wishlist</a>
+            <a href="details.html">Browse</a>
+        </div>
+        <div class="user-menu">
+            <span class="username" id="currentUsername"></span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Wishlist Header -->
+    <div class="wishlist-header">
+        <h1>❤️ My Wishlist</h1>
+        <p id="wishlistCount">Loading...</p>
+    </div>
+
+    <!-- Wishlist Grid -->
+    <div class="wishlist-grid" id="wishlistGrid">
+        <!-- Movies will be loaded here -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+        <i class="fas fa-heart-broken"></i>
+        <h2>Your wishlist is empty</h2>
+        <p>Start adding movies you love!</p>
+        <a href="index.html">Browse Movies</a>
+    </div>
+
+    <!-- Trailer Modal -->
+    <div id="trailerModal" class="modal" onclick="outsideClick(event)">
+        <span class="close" onclick="closeTrailer()">&times;</span>
+        <iframe id="trailerFrame" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        const API_KEY = "d5dfe34a324b24ba6f87a0b8bc8646d2";
+        const BASE_IMG = "https://image.tmdb.org/t/p/w500";
+
+        // Check authentication
+        const user = getCurrentUser();
+        if (!user || user.isAdmin) {
+            window.location.href = "login.html";
+        }
+
+        document.getElementById("currentUsername").textContent = user.username;
+
+        // Load wishlist
+        function loadWishlist() {
+            const grid = document.getElementById("wishlistGrid");
+            const emptyState = document.getElementById("emptyState");
+            const countEl = document.getElementById("wishlistCount");
+
+            const wishlist = user.wishlist || [];
+
+            if (wishlist.length === 0) {
+                grid.style.display = "none";
+                emptyState.style.display = "block";
+                countEl.textContent = "No movies yet";
+                return;
+            }
+
+            grid.style.display = "grid";
+            emptyState.style.display = "none";
+            countEl.textContent = `${wishlist.length} movie${wishlist.length > 1 ? 's' : ''}`;
+
+            grid.innerHTML = "";
+
+            wishlist.forEach(movie => {
+                const item = document.createElement("div");
+                item.className = "wishlist-item";
+
+                item.innerHTML = `
+                    <img src="${BASE_IMG + movie.poster_path}" alt="${movie.title}">
+                    <button class="remove-btn" onclick="removeFromWishlist(${movie.id})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="info">
+                        <h3>${movie.title}</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i> ${movie.vote_average.toFixed(1)}
+                        </div>
+                    </div>
+                `;
+
+                item.addEventListener("click", (e) => {
+                    if (!e.target.closest(".remove-btn")) {
+                        playTrailer(movie.id);
+                    }
+                });
+
+                grid.appendChild(item);
+            });
+        }
+
+        // Remove from wishlist
+        function removeFromWishlist(movieId) {
+            const user = getCurrentUser();
+            user.wishlist = user.wishlist.filter(m => m.id !== movieId);
+            saveUser(user);
+            loadWishlist();
+        }
+
+        // Play trailer
+        async function playTrailer(movieId) {
+            try {
+                const res = await fetch(
+                    `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`
+                );
+                const data = await res.json();
+                const trailer = data.results.find(v => v.type === "Trailer" && v.site === "YouTube");
+
+                if (!trailer) {
+                    alert("Trailer not available");
+                    return;
+                }
+
+                const modal = document.getElementById("trailerModal");
+                const frame = document.getElementById("trailerFrame");
+                modal.style.display = "block";
+                frame.src = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
+            } catch (error) {
+                console.error("Trailer fetch error:", error);
+            }
+        }
+
+        function closeTrailer() {
+            const modal = document.getElementById("trailerModal");
+            const frame = document.getElementById("trailerFrame");
+            modal.style.display = "none";
+            frame.src = "";
+        }
+
+        function outsideClick(e) {
+            if (e.target.id === "trailerModal") {
+                closeTrailer();
+            }
+        }
+
+        window.removeFromWishlist = removeFromWishlist;
+        window.closeTrailer = closeTrailer;
+
+        loadWishlist();
+    </script>
+</body>
+</html>
